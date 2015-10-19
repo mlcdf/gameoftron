@@ -3,26 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gameoftron;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author hikingyo
  */
+class Trajectoire {
+    int couleur;
+    ArrayList<Case> listCases = new ArrayList<>();
+
+    public Trajectoire(int couleur) {
+        this.couleur = couleur;
+    }
     
-import processing.core.PApplet;
-
-public class GameOfTron {
-
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // Lancement de l'applet processing
-        PApplet.main("gameoftron.App");
+    
+    
+    public void draw(App window){
         
     }
-
 }

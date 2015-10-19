@@ -3,26 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gameoftron;
 
 /**
  *
  * @author hikingyo
  */
+class Case {
+    int x, y;
+    int couleur;
     
-import processing.core.PApplet;
-
-public class GameOfTron {
-
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // Lancement de l'applet processing
-        PApplet.main("gameoftron.App");
+    
+    public void draw(){
         
     }
-
 }

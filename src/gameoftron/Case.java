@@ -13,8 +13,4 @@ class Case {
     int x, y;
     int couleur;
     
-    
-    public void draw(){
-        
-    }
 }

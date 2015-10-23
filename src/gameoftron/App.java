@@ -20,7 +20,7 @@ public class App extends PApplet {
 
     Joueur joueurA, joueurB;
     char directionA, directionB;
-    
+
     // Coordonnée de départ des joueurs
     float xA = largeurWindow / 3;
     float yA = hauteurWindow / 2;
@@ -52,86 +52,74 @@ public class App extends PApplet {
     }
 
     private void controler() {
-        
+
         // Déplacement du joueur joueurA
         if (key == 's') {
-            if (!collision('b', joueurA)) {
-                directionA = 'b';
-            }
+            directionA = 'b';
         }
         if (key == 'z') {
-            if (!collision('h', joueurA)) {
-                directionA = 'h';
-            }
+            directionA = 'h';
         }
         if (key == 'q') {
-            if (!collision('g', joueurA)) {
-                directionA = 'g';
-            }
+            directionA = 'g';
         }
         if (key == 'd') {
-            if (!collision('d', joueurA)) {
-                directionA = 'd';
-            }
+            directionA = 'd';
         }
         // Joueur B
         if (keyCode == DOWN) {
-            if (!collision('b', joueurB)) {
-                directionB = 'b';
-            }
+            directionB = 'b';
         }
         if (keyCode == UP) {
-            if (!collision('h', joueurB)) {
-                directionB = 'h';
-            }
+            directionB = 'h';
         }
         if (keyCode == LEFT) {
-            if (!collision('g', joueurB)) {
-                directionB = 'g';
-            }
+            directionB = 'g';
         }
         if (keyCode == RIGHT) {
-            if (!collision('d', joueurB)) {
-                directionB = 'd';
-            }
+            directionB = 'd';
         }
         // Déplacement des joueurs
-        joueurA.move(directionA);
-        joueurB.move(directionB);
+        if (!collision(directionA, joueurA)) {
+            joueurA.move(directionA);
+        }
+        if (!collision(directionB, joueurB)) {
+            joueurB.move(directionB);
+        }
     }
-    
-    private Boolean collision(char direction, Joueur j){
+
+    private Boolean collision(char direction, Joueur j) {
         Boolean collision = true;
         // Si le pixel est noir(background), il n'y a pas colision
-        switch (direction){
+        switch (direction) {
             case 'b': // Vers le bas
-                if(get((int)j.getX(), (int)j.getY()+ (int)taille + 1) == color(0)){
+                if (get((int) j.getX(), (int) j.getY() + (int) taille + 1) == color(0)) {
                     collision = false;
                 }
                 System.out.println("collider" + collision);
                 break;
-                
-            case 'h' : // Vers le haut
-                if(get((int)j.getX(), (int)j.getY()-1) == color(0)){
+
+            case 'h': // Vers le haut
+                if (get((int) j.getX(), (int) j.getY() - 1) == color(0)) {
                     collision = false;
                 }
                 break;
-                
-            case 'g' : // Vers la gauche
-                if(get((int)j.getX()- 1, (int)j.getY()) == color(0)){
+
+            case 'g': // Vers la gauche
+                if (get((int) j.getX() - 1, (int) j.getY()) == color(0)) {
                     collision = false;
                 }
                 break;
-                
-            case 'd' : // Vers la droite
-                if(get((int)j.getX()+ (int)taille + 1, (int)j.getY()) == color(0)){
+
+            case 'd': // Vers la droite
+                if (get((int) j.getX() + (int) taille + 1, (int) j.getY()) == color(0)) {
                     collision = false;
                 }
                 break;
-            default :
+            default:
                 collision = true;
         }
-        return collision;        
+        return collision;
     }
 
 }

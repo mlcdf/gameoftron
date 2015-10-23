@@ -19,6 +19,7 @@ public class App extends PApplet {
     int cB = color(0, 0, 255);
 
     Joueur joueurA, joueurB;
+    char directionA, directionB;
     
     // Coordonnée de départ des joueurs
     float xA = largeurWindow / 3;
@@ -55,47 +56,48 @@ public class App extends PApplet {
         // Déplacement du joueur joueurA
         if (key == 's') {
             if (!collision('b', joueurA)) {
-                System.out.println("b collider");
-                joueurA.move('b');
+                directionA = 'b';
             }
         }
         if (key == 'z') {
             if (!collision('h', joueurA)) {
-                joueurA.move('h');
+                directionA = 'h';
             }
         }
         if (key == 'q') {
             if (!collision('g', joueurA)) {
-                joueurA.move('g');
+                directionA = 'g';
             }
         }
         if (key == 'd') {
             if (!collision('d', joueurA)) {
-                joueurA.move('d');
+                directionA = 'd';
             }
         }
         // Joueur B
         if (keyCode == DOWN) {
             if (!collision('b', joueurB)) {
-                joueurB.move('b');
+                directionB = 'b';
             }
         }
         if (keyCode == UP) {
             if (!collision('h', joueurB)) {
-                joueurB.move('h');
+                directionB = 'h';
             }
         }
         if (keyCode == LEFT) {
             if (!collision('g', joueurB)) {
-                joueurB.move('g');
+                directionB = 'g';
             }
         }
         if (keyCode == RIGHT) {
             if (!collision('d', joueurB)) {
-                joueurB.move('d');
+                directionB = 'd';
             }
         }
-        // Déplacement du joueur
+        // Déplacement des joueurs
+        joueurA.move(directionA);
+        joueurB.move(directionB);
     }
     
     private Boolean collision(char direction, Joueur j){

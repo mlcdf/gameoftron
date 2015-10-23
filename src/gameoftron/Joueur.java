@@ -13,8 +13,8 @@ class Joueur {
 
     private String nom;
     private float x, y; // Coordonnées grahique
-    private int posX, posY; // Coordonnées dans le monde
     private int couleur;
+    private char direction;
     App window;
 
     public Joueur(String nom,int color, float x, float y, App window) {
@@ -56,25 +56,17 @@ class Joueur {
     public void setCouleur(int couleur) {
         this.couleur = couleur;
     }
-
-    public int getPosX() {
-        return posX;
-    }
-
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
-    public int getPosY() {
-        return posY;
-    }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
+    
+    public void setDirection(char direction){
+        this.direction = direction;
     }
     
-    public void move(char direction){
-        switch(direction){
+    public char getDirection(){
+        return this.direction;
+    }
+    
+    public void move(){
+        switch(this.direction){
             case 'b' :
                 this.y += window.taille;
                 break;

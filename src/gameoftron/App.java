@@ -14,12 +14,14 @@ import processing.core.PApplet;
 public class App extends PApplet {
 
     private final int hauteurWindow = 720;
-    private final int largeurWindow = 1280;
+    private final int largeurWindow = 1260;
     int cA = color(255, 0, 0);
     int cB = color(0, 0, 255);
+    Collider collider = Collider.getInstance(this);
+    // Flag de fin de partie
+    private char finPartie; // n = non, a = joueurA perdu, b = joueurB perdu
 
     Joueur joueurA, joueurB;
-    char directionA, directionB;
 
     // Coordonnée de départ des joueurs
     float xA = largeurWindow / 3;
@@ -41,6 +43,8 @@ public class App extends PApplet {
         // Initialisation des joueurs
         joueurA = new Joueur("Bob", cA, xA, yA, this);
         joueurB = new Joueur("Jean", cB, xB, yB, this);
+        // Initialisation du flag
+        finPartie = 'n';
 
     }
 
@@ -49,77 +53,55 @@ public class App extends PApplet {
         controler();
         joueurA.draw();
         joueurB.draw();
+        // Fin de partie ?
+        if (finPartie != 'n') {
+            System.out.println(" Le joueur " + finPartie + " a perdu !!");
+        }
     }
 
+    /**
+     * Méthode de contrôle des mouvements des joueurs Si un joueur appuie sur
+     * une touche qui lui est attribuée On modifie la direction de son avatar
+     * Puis on teste la is_possible
+     */
     private void controler() {
 
         // Déplacement du joueur joueurA
         if (key == 's') {
-            directionA = 'b';
+            joueurA.setDirection('b');
         }
         if (key == 'z') {
-            directionA = 'h';
+            joueurA.setDirection('h');
         }
         if (key == 'q') {
-            directionA = 'g';
+            joueurA.setDirection('g');
         }
         if (key == 'd') {
-            directionA = 'd';
+            joueurA.setDirection('d');
         }
         // Joueur B
         if (keyCode == DOWN) {
-            directionB = 'b';
+            joueurB.setDirection('b');
         }
         if (keyCode == UP) {
-            directionB = 'h';
+            joueurB.setDirection('h');
         }
         if (keyCode == LEFT) {
-            directionB = 'g';
+            joueurB.setDirection('g');
         }
         if (keyCode == RIGHT) {
-            directionB = 'd';
+            joueurB.setDirection('d');
         }
-        // Déplacement des joueurs
-        if (!collision(directionA, joueurA)) {
-            joueurA.move(directionA);
+        // Gestion is_possible
+        if (collider.is_possible(joueurA.getDirection(), joueurA)) {
+            joueurA.move();
+        } else {
+            finPartie = 'a';
         }
-        if (!collision(directionB, joueurB)) {
-            joueurB.move(directionB);
+        if (collider.is_possible(joueurB.getDirection(), joueurB)) {
+            joueurB.move();
+        } else {
+            finPartie = 'b';
         }
     }
-
-    private Boolean collision(char direction, Joueur j) {
-        Boolean collision = true;
-        // Si le pixel est noir(background), il n'y a pas colision
-        switch (direction) {
-            case 'b': // Vers le bas
-                if (get((int) j.getX(), (int) j.getY() + (int) taille + 1) == color(0)) {
-                    collision = false;
-                }
-                System.out.println("collider" + collision);
-                break;
-
-            case 'h': // Vers le haut
-                if (get((int) j.getX(), (int) j.getY() - 1) == color(0)) {
-                    collision = false;
-                }
-                break;
-
-            case 'g': // Vers la gauche
-                if (get((int) j.getX() - 1, (int) j.getY()) == color(0)) {
-                    collision = false;
-                }
-                break;
-
-            case 'd': // Vers la droite
-                if (get((int) j.getX() + (int) taille + 1, (int) j.getY()) == color(0)) {
-                    collision = false;
-                }
-                break;
-            default:
-                collision = true;
-        }
-        return collision;
-    }
-
 }

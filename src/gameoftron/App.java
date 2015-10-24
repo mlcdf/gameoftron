@@ -17,9 +17,9 @@ public class App extends PApplet {
 
     private final int hauteurWindow = 720;
     private final int largeurWindow = 1280;
-    int cA = color(246, 106, 53);
-    int cB = color(24, 202, 230);
-    int backgroundColor = color(5, 13, 16);
+    int cA = color(246, 106, 53); // définition de la couleur du joueur A
+    int cB = color(24, 202, 230); // définition de la couleur du joueur B
+    int backgroundColor = color(5, 13, 16); // définition de la couleur du background
     Collider collider = Collider.getInstance(this);
     // Récupereur le nom du joueur perdant et sert de flag de fin de partie
     private String joueurPerdant;

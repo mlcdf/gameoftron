@@ -5,6 +5,8 @@
  */
 package gameoftron;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import processing.core.PApplet;
 
 /**
@@ -14,12 +16,13 @@ import processing.core.PApplet;
 public class App extends PApplet {
 
     private final int hauteurWindow = 720;
-    private final int largeurWindow = 1260;
-    int cA = color(255, 0, 0);
-    int cB = color(0, 0, 255);
+    private final int largeurWindow = 1280;
+    int cA = color(246, 106, 53);
+    int cB = color(24, 202, 230);
+    int backgroundColor = color(5, 13, 16);
     Collider collider = Collider.getInstance(this);
-    // Flag de fin de partie
-    private char finPartie; // n = non, a = joueurA perdu, b = joueurB perdu
+    // Récupereur le nom du joueur perdant et sert de flag de fin de partie
+    private String joueurPerdant;
 
     Joueur joueurA, joueurB;
 
@@ -39,13 +42,25 @@ public class App extends PApplet {
     @Override
     public void setup() {
         frameRate(60); // définition du framerate
-        background(0);
-        // Initialisation des joueurs
-        joueurA = new Joueur("Bob", cA, xA, yA, this);
-        joueurB = new Joueur("Jean", cB, xB, yB, this);
-        // Initialisation du flag
-        finPartie = 'n';
+        background(backgroundColor);
 
+        // Initialisation et positionnement des joueurs
+        joueurA = new Joueur("Bleu", cA, xA, yA, 'b', this);
+        joueurB = new Joueur("Orange", cB, xB, yB, 'b', this);
+
+        // Dessin des positions de départ
+        joueurA.draw();
+        joueurB.draw();
+        
+        // Tempo de 1s 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Initialisation du flag
+        joueurPerdant = "";
     }
 
     @Override
@@ -53,9 +68,28 @@ public class App extends PApplet {
         controler();
         joueurA.draw();
         joueurB.draw();
-        // Fin de partie ?
-        if (finPartie != 'n') {
-            System.out.println(" Le joueur " + finPartie + " a perdu !!");
+
+        //Gestion de l'après-partie
+        if (!joueurPerdant.equals("")) {
+            
+            textSize(24);
+            textAlign(LEFT);
+            fill(255, 255, 255);
+            text(joueurPerdant + " a perdu", 10, 30);
+            text("Voulez vous refaire une partie ? (O/n)", 10, 60);
+
+            if (keyPressed == true) {
+                switch (key) {
+                    case 'o':
+                        setup();
+                        break;
+                    case 'n':
+                        exit();
+                        break;
+                    default: ;
+                        break;
+                }
+            }
         }
     }
 
@@ -93,15 +127,15 @@ public class App extends PApplet {
             joueurB.setDirection('d');
         }
         // Gestion is_possible
-        if (collider.is_possible(joueurA.getDirection(), joueurA)) {
+        if (collider.is_possible(joueurA.getDirection(), joueurA) && joueurPerdant.equals("")) {
             joueurA.move();
         } else {
-            finPartie = 'a';
+            joueurPerdant = joueurA.getNom();
         }
-        if (collider.is_possible(joueurB.getDirection(), joueurB)) {
+        if (collider.is_possible(joueurB.getDirection(), joueurB) && joueurPerdant.equals("")) {
             joueurB.move();
         } else {
-            finPartie = 'b';
+            joueurPerdant = joueurB.getNom();
         }
     }
 }

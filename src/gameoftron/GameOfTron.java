@@ -21,6 +21,8 @@ public class GameOfTron {
      */
     public static void main(String[] args) {
         // Lancement de l'applet processing
+        
+        
         PApplet.main("gameoftron.App");
         
     }

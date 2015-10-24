@@ -17,11 +17,12 @@ class Joueur {
     private char direction;
     App window;
 
-    public Joueur(String nom,int color, float x, float y, App window) {
+    public Joueur(String nom,int color, float x, float y, char direction, App window) {
         this.nom = nom;
         this.window = window;
         this.x = x;
         this.y = y;
+        this.direction = direction;
         this.couleur = color;
     }
 

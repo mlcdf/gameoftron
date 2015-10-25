@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameoftron;
 
 /**
  *
- * @author hikingyo
+ * @author Hikingyo & MLCDF
  */
 class Joueur {
 
@@ -17,11 +12,12 @@ class Joueur {
     private char direction;
     App window;
 
-    public Joueur(String nom,int color, float x, float y, App window) {
+    public Joueur(String nom, int color, float x, float y, char direction, App window) {
         this.nom = nom;
         this.window = window;
         this.x = x;
         this.y = y;
+        this.direction = direction;
         this.couleur = color;
     }
 
@@ -56,35 +52,35 @@ class Joueur {
     public void setCouleur(int couleur) {
         this.couleur = couleur;
     }
-    
-    public void setDirection(char direction){
+
+    public void setDirection(char direction) {
         this.direction = direction;
     }
-    
-    public char getDirection(){
+
+    public char getDirection() {
         return this.direction;
     }
-    
-    public void move(){
-        switch(this.direction){
-            case 'b' :
+
+    public void move() {
+        switch (this.direction) {
+            case 'b':
                 this.y += window.taille;
                 break;
-            case 'h' :
+            case 'h':
                 this.y -= window.taille;
                 break;
-            case 'g' :
+            case 'g':
                 this.x -= window.taille;
                 break;
-            case 'd' :
+            case 'd':
                 this.x += window.taille;
                 break;
-            default :
+            default:
                 break;
         }
     }
-    
-    public void draw(){
+
+    public void draw() {
         window.fill(this.couleur);
         window.noStroke();
         window.rect(this.x, this.y, window.taille, window.taille);

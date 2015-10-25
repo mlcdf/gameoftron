@@ -1,25 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameoftron;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import processing.core.PApplet;
 
 /**
  *
- * @author hikingyo
+ * @author Hikingyo & MLCDF
  */
 public class App extends PApplet {
 
     private final int hauteurWindow = 720;
-    private final int largeurWindow = 1260;
-    int cA = color(255, 0, 0);
-    int cB = color(0, 0, 255);
+    private final int largeurWindow = 1280;
+    
+    int cA = color(246, 106, 53); // définition de la couleur du joueur A
+    int cB = color(24, 202, 230); // définition de la couleur du joueur B
+    
+    int backgroundColor = color(5, 13, 16); // définition de la couleur du background
+    
     Collider collider = Collider.getInstance(this);
-    // Flag de fin de partie
-    private char finPartie; // n = non, a = joueurA perdu, b = joueurB perdu
+    
+    // Flag de fin de partie :d = début partie, a = joueur A perdant, b = joueur B perdant, sinon n = continuer
+    private char etatPartie;
+    
+    // Nom du joueur perdant
+    private String nomPerdant;
 
     Joueur joueurA, joueurB;
 
@@ -29,7 +34,9 @@ public class App extends PApplet {
     float xB = 2 * largeurWindow / 3;
     float yB = hauteurWindow / 2;
 
-    float taille = 10; // taille d'une case
+    float taille = 10; // taille d'un joueur
+    
+    long timeSet; // Temps de référence pour le chrono
 
     @Override
     public void settings() {
@@ -38,24 +45,42 @@ public class App extends PApplet {
 
     @Override
     public void setup() {
-        frameRate(60); // définition du framerate
-        background(0);
-        // Initialisation des joueurs
-        joueurA = new Joueur("Bob", cA, xA, yA, this);
-        joueurB = new Joueur("Jean", cB, xB, yB, this);
         // Initialisation du flag
-        finPartie = 'n';
+        etatPartie = 'd';
+        
+        // Initialisation du chrono
+        timeSet = System.currentTimeMillis();
+        
+        frameRate(60); // définition du framerate
+        
+        background(backgroundColor);// Affichage du background
 
+        // Initialisation et positionnement des joueurs
+        joueurA = new Joueur("Orange", cA, xA, yA, 'b', this);
+        joueurB = new Joueur("Bleu", cB, xB, yB, 'b', this);
+
+        // Dessin des positions de départ
+        joueurA.draw();
+        joueurB.draw();
+       
     }
 
     @Override
     public void draw() {
-        controler();
-        joueurA.draw();
-        joueurB.draw();
-        // Fin de partie ?
-        if (finPartie != 'n') {
-            System.out.println(" Le joueur " + finPartie + " a perdu !!");
+        if(etatPartie =='d'){
+            background(backgroundColor);
+            joueurA.draw();
+            joueurB.draw();
+            chrono();
+        }
+        else if(etatPartie == 'n'){
+            controller();
+            joueurA.draw();
+            joueurB.draw();
+        }
+        //Gestion de fin de partie
+        else {
+            finPartie(etatPartie);
         }
     }
 
@@ -64,7 +89,7 @@ public class App extends PApplet {
      * une touche qui lui est attribuée On modifie la direction de son avatar
      * Puis on teste la is_possible
      */
-    private void controler() {
+    private void controller() {
 
         // Déplacement du joueur joueurA
         if (key == 's') {
@@ -96,12 +121,67 @@ public class App extends PApplet {
         if (collider.is_possible(joueurA.getDirection(), joueurA)) {
             joueurA.move();
         } else {
-            finPartie = 'a';
+            etatPartie = 'a';
         }
         if (collider.is_possible(joueurB.getDirection(), joueurB)) {
             joueurB.move();
         } else {
-            finPartie = 'b';
+            etatPartie = 'b';
+        }
+    }
+    
+    /**
+     * Gestion de fin partie
+     * Affichage du nom du perdant
+     * Demande de nouvelle partie 
+     * @param finPartie <char> le flag qui désigne le perdant (a || b)
+     */
+    private void finPartie(char finPartie){
+        // On récupère le nom du perdant
+        if (finPartie == 'a') {
+            nomPerdant = joueurA.getNom();
+        } else if (finPartie == 'b') {
+            nomPerdant = joueurB.getNom();
+        } else {
+            System.out.println("Erreur dans le flag de fin de partie" + finPartie);
+            System.exit(0);
+        }
+
+        textSize(24);
+        textAlign(LEFT);
+        fill(255, 255, 255);
+        text(nomPerdant + " a perdu", 10, 30);
+        text("Voulez vous refaire une partie ? (O/n)", 10, 60);
+
+        if (keyPressed == true) {
+            switch (key) {
+                case 'o':
+                    setup();
+                    break;
+                case 'n':
+                    exit();
+                    break;
+                default: ;
+                    break;
+            }
+        }
+    }
+    
+    private void chrono(){
+        double duree = System.currentTimeMillis() - timeSet;
+        int currentSecond = 3 - (int)(duree / 1000);
+        
+        textSize(24);
+        textAlign(LEFT);
+        fill(255, 255, 255);
+        if(currentSecond > 0){
+           text(currentSecond, 10, 30); 
+        }
+        else if(currentSecond == 0){
+            text("GO !!", 10, 30);
+        }
+        else{
+            etatPartie = 'n';
         }
     }
 }

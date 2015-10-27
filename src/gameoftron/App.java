@@ -1,8 +1,7 @@
 package gameoftron;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import processing.core.PApplet;
+import processing.core.PFont;
 
 /**
  *
@@ -37,6 +36,8 @@ public class App extends PApplet {
     float taille = 10; // taille d'un joueur
     
     long timeSet; // Temps de référence pour le chrono
+    
+    private PFont font;
 
     @Override
     public void settings() {
@@ -45,6 +46,9 @@ public class App extends PApplet {
 
     @Override
     public void setup() {
+        //Chargement de la police de caractères
+        font = createFont("TRON", 24);
+        
         // Initialisation du flag
         etatPartie = 'd';
         
@@ -147,11 +151,12 @@ public class App extends PApplet {
             System.exit(0);
         }
 
-        textSize(24);
+        textFont(font);
+        textSize(18);
         textAlign(LEFT);
         fill(255, 255, 255);
         text(nomPerdant + " a perdu", 10, 30);
-        text("Voulez vous refaire une partie ? (O/n)", 10, 60);
+        text("Voulez vous refaire une partie ? (O/N)", 10, 60);
 
         if (keyPressed == true) {
             switch (key) {
@@ -168,17 +173,23 @@ public class App extends PApplet {
     }
     
     private void chrono(){
+        // Taille de la police
+        float fontSize = 120;
+        
+        // Positionnement du chrono
+        float chronoPosX = largeurWindow/2 - fontSize/2;
+        float chronoPosY = hauteurWindow/2 + fontSize/2;
         double duree = System.currentTimeMillis() - timeSet;
         int currentSecond = 3 - (int)(duree / 1000);
         
-        textSize(24);
+        textFont(font, fontSize);
         textAlign(LEFT);
         fill(255, 255, 255);
         if(currentSecond > 0){
-           text(currentSecond, 10, 30); 
+           text(currentSecond, chronoPosX, chronoPosY); 
         }
         else if(currentSecond == 0){
-            text("GO !!", 10, 30);
+            text("GO !!", chronoPosX -3*(fontSize/2), chronoPosY);
         }
         else{
             etatPartie = 'n';

@@ -186,6 +186,7 @@ public class App extends PApplet {
         }
     }
 
+    // Gestion du chronomètre de début de partie
     private void chrono() {
 
         // Positionnement du chrono
@@ -205,10 +206,11 @@ public class App extends PApplet {
             etatPartie = 'n';
         }
     }
-
+    // Gestion de l'écran d'accueil
     private void ecran_accueil() {
-        background(backgroundColor);// Affichage du background
+        background(backgroundColor); 
         textAlign(CENTER);
+        
         fill(couleurBleu);
         textFont(fontTron, fontSize);
         text("Tron", largeurWindow / 2 - fontSize / 4, hauteurWindow / 3 + fontSize / 2);
@@ -217,6 +219,7 @@ public class App extends PApplet {
         textFont(fontDefault, fontSize / 5);
         text("Made by @Hikingyo & @mlcdf", largeurWindow / 2 - fontSize / 4, hauteurWindow / 3 + fontSize);
         
+        // Gestion du clignotement 
         int clignotement = (int)(System.currentTimeMillis()/300) % 2;
 
         if (clignotement == 0) {
@@ -224,12 +227,12 @@ public class App extends PApplet {
             textFont(fontDefault, fontSize / 4);
             text("Press ENTER to continue", largeurWindow / 2 - fontSize / 4, 3 * hauteurWindow / 4 + fontSize / 2);
         }
-
+        
+        // Navigation
         if (keyPressed == true) {
             if (key == ENTER || key == ' ') {
                 setup();
                 etatPartie = 'd';
-
             }
             if (key == ESC) {
                 exit();

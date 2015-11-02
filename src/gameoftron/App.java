@@ -47,7 +47,7 @@ public class App extends PApplet {
     @Override
     public void setup() {
         //Chargement de la police de caractères
-        font = createFont("TRON", 24);
+        font = createFont("./TRON.TTF", 24);
         
         // Initialisation du flag
         etatPartie = 'd';
@@ -93,6 +93,7 @@ public class App extends PApplet {
      * une touche qui lui est attribuée On modifie la direction de son avatar
      * Puis on teste la is_possible
      */
+    
     private void controller() {
 
         // Déplacement du joueur joueurA

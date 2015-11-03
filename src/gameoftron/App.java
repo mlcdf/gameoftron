@@ -1,7 +1,5 @@
 package gameoftron;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -55,8 +53,8 @@ public class App extends PApplet {
     @Override
     public void setup() {
         //Chargement de la police de caractères
-        fontTron = createFont("TRON", 24);
-        fontDefault = createFont("Roboto-Regular", 24);
+        fontTron = createFont("./fonts/TRON.TTF", 24);
+        fontDefault = createFont("./fonts/Roboto-Regular.ttf", 24);
         // Taille de la police
         fontSize = 120;
 

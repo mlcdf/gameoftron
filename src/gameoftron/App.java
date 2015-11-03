@@ -53,8 +53,8 @@ public class App extends PApplet {
     @Override
     public void setup() {
         //Chargement de la police de caractères
-        fontTron = createFont("./fonts/TRON.TTF", 24);
-        fontDefault = createFont("./fonts/Roboto-Regular.ttf", 24);
+        fontTron = createFont("TRON.TTF", 24);
+        fontDefault = createFont("Roboto-Regular.ttf", 24);
         // Taille de la police
         fontSize = 120;
 

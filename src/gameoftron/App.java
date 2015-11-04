@@ -2,6 +2,7 @@ package gameoftron;
 
 import processing.core.PApplet;
 import processing.core.PFont;
+import processing.core.PImage;
 
 /**
  *
@@ -14,12 +15,15 @@ import processing.core.PFont;
 public class App extends PApplet {
 
     private final int hauteurWindow = 720;
-    private final int largeurWindow = 1280;
+    private final int largeurWindow = 1260;
 
     int couleurOrange = color(246, 106, 53); // définition de la couleur Orange
     int couleurBleu = color(24, 202, 230); // définition de la couleur Bleu
 
     int backgroundColor = color(5, 13, 16); // définition de la couleur du background
+    
+    PImage arrow;
+ 
 
     Collider collider = Collider.getInstance(this);
 
@@ -75,6 +79,8 @@ public class App extends PApplet {
         // Dessin des positions de départ
         joueurA.draw();
         joueurB.draw();
+        
+        
 
     }
 
@@ -89,6 +95,7 @@ public class App extends PApplet {
             background(backgroundColor);
             joueurA.draw();
             joueurB.draw();
+            displayControl();
             chrono();
         } else if (etatPartie == 'n') {
             controller();
@@ -108,16 +115,16 @@ public class App extends PApplet {
     private void controller() {
 
         // Déplacement du joueur joueurA
-        if (key == 's' && joueurB.getDirection() != 'h') {
+        if (key == 's' && joueurA.getDirection() != 'h') {
             joueurA.setDirection('b');
         }
-        if (key == 'z' && joueurB.getDirection() != 'b') {
+        if (key == 'z' && joueurA.getDirection() != 'b') {
             joueurA.setDirection('h');
         }
-        if (key == 'q' && joueurB.getDirection() != 'd') {
+        if (key == 'q' && joueurA.getDirection() != 'd') {
             joueurA.setDirection('g');
         }
-        if (key == 'd' && joueurB.getDirection() != 'g') {
+        if (key == 'd' && joueurA.getDirection() != 'g') {
             joueurA.setDirection('d');
         }
         // Joueur B
@@ -182,6 +189,45 @@ public class App extends PApplet {
                     break;
             }
         }
+    }
+    
+    private void displayControl(){
+        
+        int posLeft = largeurWindow/6;
+        int posRight = 5*largeurWindow/6;
+        
+        stroke(255);
+        fill(backgroundColor);
+        rect(posLeft, hauteurWindow/2 + 30, 50, 50, 7);
+        rect(posLeft, hauteurWindow/2 - 70, 50, 50, 7);
+        rect(posLeft - 50, hauteurWindow/2 - 20, 50, 50, 7);
+        rect(posLeft + 50, hauteurWindow/2 - 20, 50, 50, 7);
+        
+        fill(255);
+        textFont(fontDefault, fontSize/4);
+        text("Z", posLeft + fontSize/8, hauteurWindow/2 -50 + fontSize/8);
+        text("S", posLeft + fontSize/8, hauteurWindow/2 +50 + fontSize/8);
+        text("Q", posLeft + fontSize/8 - 50, hauteurWindow/2 + fontSize/8);
+        text("D", posLeft + fontSize/8 + 50, hauteurWindow/2 + fontSize/8);
+        
+        stroke(255);
+        fill(backgroundColor);
+        rect(posRight, hauteurWindow/2 + 30, 50, 50, 7);
+        rect(posRight, hauteurWindow/2 - 70, 50, 50, 7);
+        rect(posRight - 50, hauteurWindow/2 - 20, 50, 50, 7);
+        rect(posRight + 50, hauteurWindow/2 - 20, 50, 50, 7);
+        
+        fill(255);
+        textFont(fontDefault, fontSize/4);
+            
+        arrow = loadImage("src/up.png");
+        image(arrow, posRight +1,hauteurWindow/2 - 70);
+        arrow = loadImage("src/down.png");
+        image(arrow, posRight +1,hauteurWindow/2 + 30);
+        arrow = loadImage("src/left.png");
+        image(arrow, posRight - 50,hauteurWindow/2 -19);
+        arrow = loadImage("src/right.png");
+        image(arrow, posRight + 50,hauteurWindow/2 -19);
     }
 
     // Gestion du chronomètre de début de partie

@@ -82,7 +82,7 @@ class Joueur {
 
     public void draw() {
         window.fill(this.couleur);
-        window.noStroke();
+        window.stroke(this.couleur);
         window.rect(this.x, this.y, window.taille, window.taille);
     }
 

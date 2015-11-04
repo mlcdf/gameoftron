@@ -108,29 +108,29 @@ public class App extends PApplet {
     private void controller() {
 
         // Déplacement du joueur joueurA
-        if (key == 's') {
+        if (key == 's' && joueurB.getDirection() != 'h') {
             joueurA.setDirection('b');
         }
-        if (key == 'z') {
+        if (key == 'z' && joueurB.getDirection() != 'b') {
             joueurA.setDirection('h');
         }
-        if (key == 'q') {
+        if (key == 'q' && joueurB.getDirection() != 'd') {
             joueurA.setDirection('g');
         }
-        if (key == 'd') {
+        if (key == 'd' && joueurB.getDirection() != 'g') {
             joueurA.setDirection('d');
         }
         // Joueur B
-        if (keyCode == DOWN) {
+        if (keyCode == DOWN && joueurB.getDirection() != 'h') {
             joueurB.setDirection('b');
         }
-        if (keyCode == UP) {
+        if (keyCode == UP && joueurB.getDirection() != 'b') {
             joueurB.setDirection('h');
         }
-        if (keyCode == LEFT) {
+        if (keyCode == LEFT && joueurB.getDirection() != 'd') {
             joueurB.setDirection('g');
         }
-        if (keyCode == RIGHT) {
+        if (keyCode == RIGHT && joueurB.getDirection() != 'g') {
             joueurB.setDirection('d');
         }
         // Gestion is_possible

@@ -34,25 +34,25 @@ public class Collider {
         // Si le pixel est noir(background), il n'y a pas colision
         switch (direction) {
             case 'b': // Vers le bas
-                if (app.get((int) j.getX(), (int) j.getY() + (int) app.taille+1) != app.color(app.backgroundColor)) {
+                if (app.get((int) j.getX(), (int) j.getY() + (int) app.taille + 1) != app.color(app.backgroundColor)) {
                     is_possible = false;
                 }
                 break;
 
             case 'h': // Vers le haut
-                if (app.get((int) j.getX(), (int) j.getY() - (int) app.taille) != app.color(app.backgroundColor)) {
+                if (app.get((int) j.getX(), (int) j.getY() - 1) != app.color(app.backgroundColor)) {
                     is_possible = false;
                 }
                 break;
 
             case 'g': // Vers la gauche
-                if (app.get((int) j.getX() - (int) app.taille, (int) j.getY()) != app.color(app.backgroundColor)) {
+                if (app.get((int) j.getX() - 1, (int) j.getY()) != app.color(app.backgroundColor)) {
                     is_possible = false;
                 }
                 break;
 
             case 'd': // Vers la droite
-                if (app.get((int) j.getX() + (int) app.taille+1, (int) j.getY()) != app.color(app.backgroundColor)) {
+                if (app.get((int) j.getX() + (int) app.taille + 1, (int) j.getY()) != app.color(app.backgroundColor)) {
                     is_possible = false;
                 }
                 break;

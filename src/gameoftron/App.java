@@ -7,11 +7,10 @@ import processing.core.PImage;
 /**
  *
  * @author @Hikingyo & @mlcdf
- * 
+ *
  * Built with the Processing library for Java
- * 
+ *
  */
-
 public class App extends PApplet {
 
     private final int hauteurWindow = 720;
@@ -21,9 +20,8 @@ public class App extends PApplet {
     int couleurBleu = color(24, 202, 230); // définition de la couleur Bleu
 
     int backgroundColor = color(5, 13, 16); // définition de la couleur du background
-    
+
     PImage arrow;
- 
 
     Collider collider = Collider.getInstance(this);
 
@@ -79,8 +77,6 @@ public class App extends PApplet {
         // Dessin des positions de départ
         joueurA.draw();
         joueurB.draw();
-        
-        
 
     }
 
@@ -90,14 +86,15 @@ public class App extends PApplet {
         //Affichage de l'écran d'accueil
         if (etatPartie == 's') {
             ecran_accueil();
-        } else if (etatPartie == 'd') {
+        }
+        else if (etatPartie == 'd') {
 
             background(backgroundColor);
             joueurA.draw();
             joueurB.draw();
-            displayControl();
             chrono();
-        } else if (etatPartie == 'n') {
+        }
+        else if (etatPartie == 'n') {
             controller();
             joueurA.draw();
             joueurB.draw();
@@ -190,44 +187,44 @@ public class App extends PApplet {
             }
         }
     }
-    
-    private void displayControl(){
-        
-        int posLeft = largeurWindow/6;
-        int posRight = 5*largeurWindow/6;
-        
+
+    private void displayControl() {
+
+        int posLeft = largeurWindow / 6;
+        int posRight = 5 * largeurWindow / 6;
+
         stroke(255);
         fill(backgroundColor);
-        rect(posLeft, hauteurWindow/2 + 30, 50, 50, 7);
-        rect(posLeft, hauteurWindow/2 - 70, 50, 50, 7);
-        rect(posLeft - 50, hauteurWindow/2 - 20, 50, 50, 7);
-        rect(posLeft + 50, hauteurWindow/2 - 20, 50, 50, 7);
-        
+        rect(posLeft, hauteurWindow / 2 + 30, 50, 50, 7);
+        rect(posLeft, hauteurWindow / 2 - 70, 50, 50, 7);
+        rect(posLeft - 50, hauteurWindow / 2 - 20, 50, 50, 7);
+        rect(posLeft + 50, hauteurWindow / 2 - 20, 50, 50, 7);
+
         fill(255);
-        textFont(fontDefault, fontSize/4);
-        text("Z", posLeft + fontSize/8, hauteurWindow/2 -50 + fontSize/8);
-        text("S", posLeft + fontSize/8, hauteurWindow/2 +50 + fontSize/8);
-        text("Q", posLeft + fontSize/8 - 50, hauteurWindow/2 + fontSize/8);
-        text("D", posLeft + fontSize/8 + 50, hauteurWindow/2 + fontSize/8);
-        
+        textFont(fontDefault, fontSize / 4);
+        text("Z", posLeft + fontSize / 8, hauteurWindow / 2 - 50 + fontSize / 8);
+        text("S", posLeft + fontSize / 8, hauteurWindow / 2 + 50 + fontSize / 8);
+        text("Q", posLeft + fontSize / 8 - 50, hauteurWindow / 2 + fontSize / 8);
+        text("D", posLeft + fontSize / 8 + 50, hauteurWindow / 2 + fontSize / 8);
+
         stroke(255);
         fill(backgroundColor);
-        rect(posRight, hauteurWindow/2 + 30, 50, 50, 7);
-        rect(posRight, hauteurWindow/2 - 70, 50, 50, 7);
-        rect(posRight - 50, hauteurWindow/2 - 20, 50, 50, 7);
-        rect(posRight + 50, hauteurWindow/2 - 20, 50, 50, 7);
-        
+        rect(posRight, hauteurWindow / 2 + 30, 50, 50, 7);
+        rect(posRight, hauteurWindow / 2 - 70, 50, 50, 7);
+        rect(posRight - 50, hauteurWindow / 2 - 20, 50, 50, 7);
+        rect(posRight + 50, hauteurWindow / 2 - 20, 50, 50, 7);
+
         fill(255);
-        textFont(fontDefault, fontSize/4);
-            
+        textFont(fontDefault, fontSize / 4);
+
         arrow = loadImage("src/up.png");
-        image(arrow, posRight +1,hauteurWindow/2 - 70);
+        image(arrow, posRight + 1, hauteurWindow / 2 - 70);
         arrow = loadImage("src/down.png");
-        image(arrow, posRight +1,hauteurWindow/2 + 30);
+        image(arrow, posRight + 1, hauteurWindow / 2 + 30);
         arrow = loadImage("src/left.png");
-        image(arrow, posRight - 50,hauteurWindow/2 -19);
+        image(arrow, posRight - 50, hauteurWindow / 2 - 19);
         arrow = loadImage("src/right.png");
-        image(arrow, posRight + 50,hauteurWindow/2 -19);
+        image(arrow, posRight + 50, hauteurWindow / 2 - 19);
     }
 
     // Gestion du chronomètre de début de partie
@@ -244,17 +241,21 @@ public class App extends PApplet {
         fill(255, 255, 255);
         if (currentSecond > 0) {
             text(currentSecond, chronoPosX, chronoPosY);
+            // Affichage des touches de contrôles des joueurs
+            displayControl();
         } else if (currentSecond == 0) {
             text("GO !!", chronoPosX - 3 * (fontSize / 2), chronoPosY);
         } else {
             etatPartie = 'n';
         }
     }
+
     // Gestion de l'écran d'accueil
+
     private void ecran_accueil() {
-        background(backgroundColor); 
+        background(backgroundColor);
         textAlign(CENTER);
-        
+
         fill(couleurBleu);
         textFont(fontTron, fontSize);
         text("Tron", largeurWindow / 2 - fontSize / 4, hauteurWindow / 3 + fontSize / 2);
@@ -262,16 +263,16 @@ public class App extends PApplet {
         fill(255, 255, 255, 50);
         textFont(fontDefault, fontSize / 5);
         text("Made by @Hikingyo & @mlcdf", largeurWindow / 2 - fontSize / 4, hauteurWindow / 3 + fontSize);
-        
+
         // Gestion du clignotement 
-        int clignotement = (int)(System.currentTimeMillis()/300) % 2;
+        int clignotement = (int) (System.currentTimeMillis() / 300) % 2;
 
         if (clignotement == 0) {
             fill(255, 255, 255);
             textFont(fontDefault, fontSize / 4);
             text("Press ENTER to continue", largeurWindow / 2 - fontSize / 4, 3 * hauteurWindow / 4 + fontSize / 2);
         }
-        
+
         // Navigation
         if (keyPressed == true) {
             if (key == ENTER || key == ' ') {

@@ -66,7 +66,7 @@ public class App extends PApplet {
         // Initialisation du chrono
         timeSet = System.currentTimeMillis();
 
-        frameRate(60); // définition du framerate
+        frameRate(30); // définition du framerate
 
         background(backgroundColor);// Affichage du background
 

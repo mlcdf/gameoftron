@@ -60,7 +60,10 @@ class Joueur {
     public char getDirection() {
         return this.direction;
     }
-
+    /**
+     * Gestion du déplacement du joueur en fonction de la direction
+     * et de sa taille
+     */
     public void move() {
         switch (this.direction) {
             case 'b':

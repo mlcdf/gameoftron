@@ -13,8 +13,16 @@ import processing.core.PImage;
  */
 public class App extends PApplet {
 
+    // Dimension de l'esapce graphique
     private final int hauteurWindow = 720;
     private final int largeurWindow = 1260;
+    
+    // Constante d'état de partie
+    private static final char PARTIE_EN_COURS = 'n';
+    private static final char DEBUT_PARTIE = 'd';
+    private static final char ECRAN_ACCUEIL = 's';
+    private static final char PERDU_JA = 'a';
+    private static final char PERDU_JB = 'b';
 
     int couleurOrange = color(246, 106, 53); // définition de la couleur Orange
     int couleurBleu = color(24, 202, 230); // définition de la couleur Bleu
@@ -23,9 +31,9 @@ public class App extends PApplet {
 
     PImage arrow;
 
-    Collider collider = Collider.getInstance(this);
+    private final Collider collider = Collider.getInstance(this);
 
-    // Flag de fin de partie :d = début partie, a = joueur A perdant, b = joueur B perdant, sinon n = continuer
+    // Flag de fin de partie
     private char etatPartie;
 
     // Nom du joueur perdant
@@ -61,7 +69,7 @@ public class App extends PApplet {
         fontSize = 120;
 
         // Initialisation du flag
-        etatPartie = 's';
+        etatPartie = ECRAN_ACCUEIL;
 
         // Initialisation du chrono
         timeSet = System.currentTimeMillis();
@@ -84,20 +92,22 @@ public class App extends PApplet {
     public void draw() {
 
         //Affichage de l'écran d'accueil
-        if (etatPartie == 's') {
+        if (etatPartie == ECRAN_ACCUEIL) {
             ecran_accueil();
         }
-        else if (etatPartie == 'd') {
+        // Lancement du chrono de départ
+        else if (etatPartie == DEBUT_PARTIE) {
 
             background(backgroundColor);
             joueurA.draw();
             joueurB.draw();
             chrono();
         }
-        else if (etatPartie == 'n') {
-            controller();
+        // Partie en cours
+        else if (etatPartie == PARTIE_EN_COURS) {
             joueurA.draw();
             joueurB.draw();
+            controller();
         } //Gestion de fin de partie
         else {
             finPartie(etatPartie);
@@ -107,7 +117,7 @@ public class App extends PApplet {
     /**
      * Méthode de contrôle des mouvements des joueurs Si un joueur appuie sur
      * une touche qui lui est attribuée On modifie la direction de son avatar
-     * Puis on teste la is_possible
+     * Puis on teste la collision
      */
     private void controller() {
 
@@ -137,16 +147,16 @@ public class App extends PApplet {
         if (keyCode == RIGHT && joueurB.getDirection() != 'g') {
             joueurB.setDirection('d');
         }
-        // Gestion is_possible
+        // Gestion collision
         if (collider.is_possible(joueurA.getDirection(), joueurA)) {
             joueurA.move();
         } else {
-            etatPartie = 'a';
+            etatPartie = PERDU_JA;
         }
         if (collider.is_possible(joueurB.getDirection(), joueurB)) {
             joueurB.move();
         } else {
-            etatPartie = 'b';
+            etatPartie = PERDU_JB;
         }
     }
 
@@ -158,9 +168,9 @@ public class App extends PApplet {
      */
     private void finPartie(char finPartie) {
         // On récupère le nom du perdant
-        if (finPartie == 'a') {
+        if (finPartie == PERDU_JA) {
             nomPerdant = joueurA.getNom();
-        } else if (finPartie == 'b') {
+        } else if (finPartie == PERDU_JB) {
             nomPerdant = joueurB.getNom();
         } else {
             System.out.println("Erreur dans le flag de fin de partie" + finPartie);
@@ -177,10 +187,10 @@ public class App extends PApplet {
             switch (key) {
                 case 'o':
                     setup();
-                    etatPartie = 'd';
+                    etatPartie = DEBUT_PARTIE;
                     break;
                 case 'n':
-                    etatPartie = 's';
+                    etatPartie = ECRAN_ACCUEIL;
                     break;
                 default: ;
                     break;
